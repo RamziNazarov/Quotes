@@ -90,5 +90,19 @@ namespace Quotes.Services
 
             return new GenericResponse<QuoteResponse>{Succeeded = true, Message = "Quote-ов нет"};
         }
+
+        public async Task DeleteOldQuotesAsync()
+        {
+            DateTime currentDateTime = DateTime.Now;
+            var quotes = await _context.Quotes.Where(x =>
+                x.CreateAt.Hour < currentDateTime.Hour && x.CreateAt.Day <= currentDateTime.Day &&
+                x.CreateAt.Year <= currentDateTime.Year).ToListAsync();
+            foreach (var quote in quotes)
+            {
+                _context.Entry(quote).State = EntityState.Deleted;
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -9,6 +9,7 @@ using Quotes.Database;
 using Quotes.Interfaces.Services;
 using Quotes.Middlewares;
 using Quotes.Services;
+using Quotes.Workers;
 
 namespace Quotes
 {
@@ -33,6 +34,7 @@ namespace Quotes
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Quotes", Version = "v1" });
             });
             services.AddTransient<IQuoteService, QuoteService>();
+            services.AddHostedService<DeleteQuotesWorker>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

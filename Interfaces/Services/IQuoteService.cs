@@ -12,5 +12,6 @@ namespace Quotes.Interfaces.Services
         Task<Response> UpdateAsync(UpdateQuoteRequest request);
         Task<GenericResponse<List<QuoteResponse>>> GetAllByCategoryIdAsync(int id);
         Task<GenericResponse<QuoteResponse>> GetRandomQuoteAsync();
+        Task DeleteOldQuotesAsync();
     }
 }
