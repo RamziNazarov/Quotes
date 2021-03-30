@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Quotes.Database;
 using Quotes.Interfaces.Services;
+using Quotes.Middlewares;
 using Quotes.Services;
 
 namespace Quotes
@@ -21,7 +24,8 @@ namespace Quotes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<ApplicationDbContext>(x =>
+                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             services.AddRouting(x => x.LowercaseUrls = true);
             services.AddSwaggerGen(c =>
@@ -44,6 +48,8 @@ namespace Quotes
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseAuthorization();
 
