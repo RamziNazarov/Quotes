@@ -1,3 +1,5 @@
+using System;
+
 namespace Quotes.DTOs
 {
     public class QuoteResponse
@@ -5,6 +7,7 @@ namespace Quotes.DTOs
         public string Author { get; set; }
         public string Category { get; set; }
         public string Quote { get; set; }
+        public DateTime CreateAt { get; set; }
         public int Id { get; set; }
     }
 }

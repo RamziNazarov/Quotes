@@ -8,5 +8,9 @@ namespace Quotes.Interfaces.Services
     public interface IQuoteService
     {
         Task<GenericResponse<List<QuoteResponse>>> GetAllAsync();
+        Task<Response> DeleteByIdAsync(int id);
+        Task<Response> UpdateAsync(UpdateQuoteRequest request);
+        Task<GenericResponse<List<QuoteResponse>>> GetAllByCategoryIdAsync(int id);
+        Task<GenericResponse<QuoteResponse>> GetRandomQuoteAsync();
     }
 }
